@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
+
 	_ "github.com/lib/pq"
 )
 
@@ -25,10 +25,6 @@ type Foods struct {
 }
 
 func main() {
-	 port := os.Getenv("PORT")
-    if port == "" {
-        port = "8080"
-    }
 	connStr := "user=postgres password=1234 host=localhost port=5432 dbname=mydatabase sslmode=disable"
 	var err error
 	userdb, err := sql.Open("postgres", connStr)
@@ -64,7 +60,7 @@ func main() {
 	http.HandleFunc("/foods", getFoodsHandler(foodsdb))
 	http.HandleFunc("/add-foods",addFoodsHandler(foodsdb))
 	fmt.Println("Server :8080 portida ishlayabti")
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 
 }
 
